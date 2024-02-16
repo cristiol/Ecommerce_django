@@ -1,11 +1,16 @@
 from django.db import models
 import datetime
 
+
 class Category(models.Model):
     name = models.CharField(max_length=50)
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name_plural = 'Categories'
+
 
 class Customer(models.Model):
     first_name = models.CharField(max_length=50)
@@ -16,6 +21,7 @@ class Customer(models.Model):
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
+
 
 class Product(models.Model):
     name = models.CharField(max_length=100)
@@ -36,6 +42,7 @@ class Order(models.Model):
     phone = models.CharField(max_length=20, default='', blank=True)
     date = models.DateField(default=datetime.datetime.today)
     status = models.BooleanField(default=False)
+
 
     def __str__(self):
         return self.product
