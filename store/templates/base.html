@@ -20,8 +20,6 @@
         <!-- Navigation-->
         {% include 'navbar.html' %}
 
-        {% block content %}
-
         {% if messages %}
             {%for message in messages %}
                 <br>
@@ -29,10 +27,10 @@
                     {{ message }}
                   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
-
             {%endfor%}
           {% endif %}
 
+        {% block content %}
         {% endblock%}
 
         <!-- Footer-->
