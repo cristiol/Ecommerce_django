@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content%}
+<br>
+<br>
+<div class="container">
+{% if product.is_sale %}
+
+  <div class="card mb-3" >
+  <div class="row g-0">
+    <div class="col-md-4">
+
+      <img src="{{ product.image.url }}" class="img-fluid rounded-start" alt="...">
+      <div class="badge bg-danger text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{ product.name }}</h5>
+        <p class="card-text">{{ product.description }}</p>
+
+        <div class="d-flex justify-content small text-warning mb-2">
+            <div class="bi-star-fill"></div>
+            &nbsp;&nbsp;Sale!&nbsp;&nbsp;
+            <div class="bi-star-fill"></div>
+            </div>
+        <strike>{{ product.price }}</strike>>
+        <br>
+        {{ product.sale_price }}
+        <br>
+          <a href="{% url 'home' %}" class="btn btn-secondary">Home</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+  {%else%}
+
+<div class="card mb-3" >
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img src="{{ product.image.url }}" class="img-fluid rounded-start" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{ product.name }}</h5>
+        <p class="card-text">{{ product.description }}</p>
+        <p class="card-text"><small class="text-body-secondary">{{ product.price }}</small></p>
+          <a href="{% url 'home' %}" class="btn btn-secondary">Home</a>
+      </div>
+    </div>
+  </div>
+</div>
+  {% endif %}
+</div>
+
+{% endblock %}
