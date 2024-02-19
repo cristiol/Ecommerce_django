@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Product
+from .models import Product, Category
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -8,14 +8,30 @@ from django import forms
 from .forms import SignUpForm
 
 
+def category(request, slug):
+    categories = Category.objects.all()
+    slug = slug.replace('-', ' ')
+    category = Category.objects.get(name=slug)
+    products = Product.objects.filter(category=category)
+    try:
+        return render(request, 'category.html', {"products": products, "category": category, 'categories': categories})
+    except:
+        messages.success(request, 'This category doesnt exist')
+        return redirect('home')
+
+
+
+
 def product(request, pk):
     product = Product.objects.get(id=pk)
     return render(request, 'product.html', {'product': product})
 
 
-def home(request):
+def home(request,):
+
     products = Product.objects.all()
-    return render(request, 'home.html', {'products': products})
+    categories = Category.objects.all()
+    return render(request, 'home.html', {'products': products, 'categories': categories})
 
 
 def about(request):
