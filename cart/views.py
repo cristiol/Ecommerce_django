@@ -20,9 +20,12 @@ def cart_add(request):
         product = get_object_or_404(Product, id=product_id)
         # save the session
         cart.add(product=product)
+        # get cart quantity
+        cart_quantity = cart.__len__()
 
         # Return resonse
-        response = JsonResponse({'Product Name: ': product.name})
+        #response = JsonResponse({'Product Name: ': product.name})
+        response = JsonResponse({'qty': cart_quantity})
         messages.success(request, "Product Added To Cart...")
         return response
 
