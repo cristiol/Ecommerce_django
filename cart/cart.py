@@ -5,7 +5,7 @@ class Cart:
         # Get the current session if exist
         cart = request.session.get('session_key')
 
-        # if the user is new, no sessions key, crate one
+        # if the user is new, no sessions key, create one
         if 'session_key' not in request.session:
             cart = self.session['session_key'] = {}
 
