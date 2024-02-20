@@ -73,6 +73,7 @@
             </div>
             <br/><br/>
             <button type="button" data-index="{{ product.id }}" class="btn btn-secondary update-cart">Update</button>
+            <button type="button" data-index="{{ product.id }}" class="btn btn-danger delete-product">Delete</button>
 
     </center>
       </div>
@@ -110,5 +111,30 @@ $(document).on('click', '.update-cart', function(e){
         }
     });
 })
+
+    $(document).on('click', '.delete-product', function(e){
+    e.preventDefault();
+    var productid = $(this).data('index');
+    $.ajax({
+        type: 'POST',
+        url: '{% url 'cart_delete' %}',
+        data: {
+    product_id: $(this).data('index'),
+    csrfmiddlewaretoken: '{{ csrf_token }}',
+    action: 'post'
+        },
+
+         success: function(json){
+             location.reload();
+        },
+
+        error: function(xhr, errmsg, err){
+
+        }
+    });
+})
+
+
+
 </script>
 {% endblock %}

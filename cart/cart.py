@@ -55,3 +55,14 @@ class Cart:
 
         return self.cart
 
+    def delete(self, product):
+        product_id = str(product)
+
+        if product_id in self.cart:
+            del self.cart[product_id]
+
+        self.session.modified = True
+
+        return self.cart
+
+
