@@ -12,6 +12,7 @@
     </div>
 </header>
 
+{% if cart_products %}
 {% for product in cart_products %}
 <br>
 <br>
@@ -82,7 +83,11 @@
 </div>
 </div>
 {% endfor%}
-
+<h3 class="card-text justified">Total: {{ totals }} $</h3>
+<br><br><br>
+{% else %}
+<h1>There s nothing in your cart</h1>
+{% endif %}
 
 
 <script>
