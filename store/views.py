@@ -1,11 +1,9 @@
 from django.shortcuts import render, redirect
-from .models import Product, Category
+from .models import Product, Category, Profile
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
-from django import forms
-from .forms import SignUpForm, UpdateUserForm, UpdatePassword
+from .forms import SignUpForm, UpdateUserForm, UpdatePassword, UserInfoForm
 
 
 def category(request, slug):
@@ -18,8 +16,6 @@ def category(request, slug):
     except:
         messages.success(request, 'This category doesnt exist')
         return redirect('home')
-
-
 
 
 def product(request, pk):
@@ -72,7 +68,7 @@ def register_user(request):
             user = authenticate(username=username, password=password)
             login(request, user)
             messages.success(request, 'You have been registered')
-            return redirect('home')
+            return redirect('update_user')
         else:
             messages.success(request, 'There was a problem')
             return redirect('register')
@@ -118,6 +114,22 @@ def update_password(request):
             return render(request, "update_password.html", {'form':form})
     else:
         messages.success(request, "You Must Be Logged In To View That Page...")
+        return redirect('home')
+
+
+def update_info(request):
+    if request.user.is_authenticated:
+        current_user = Profile.objects.get(user__id=request.user.id)
+        form = UserInfoForm(request.POST or None, instance=current_user)
+
+        if form.is_valid():
+            form.save()
+
+            messages.success(request, 'Your info has been updated')
+            return redirect('home')
+        return render(request, 'update_info.html', {'form': form})
+    else:
+        messages.success(request, 'You must be logged in')
         return redirect('home')
 
 
