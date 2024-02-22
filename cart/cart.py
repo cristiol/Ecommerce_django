@@ -1,9 +1,10 @@
-from store.models import Product
+from store.models import Product, Profile
 
 
 class Cart:
     def __init__(self, request):
         self.session = request.session
+        self.request = request
         # Get the current session if exist
         cart = request.session.get('session_key')
 
@@ -26,6 +27,11 @@ class Cart:
 
         self.session.modified = True
 
+        if self.request.user.is_authenticated:
+            current_user = Profile.objects.filter(user__id=self.request.user.id)
+            json_cart = str(self.cart)
+            json_cart = json_cart.replace("\'", "\"")
+            current_user.update(old_cart=str(json_cart))
 
     def __len__(self):
         return len(self.cart)
