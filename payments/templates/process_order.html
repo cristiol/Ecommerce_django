@@ -1,3 +1,4 @@
+
 {% extends 'base.html' %}
 
 
@@ -7,15 +8,15 @@
         <header class="bg-dark py-5">
             <div class="container px-4 px-lg-5 my-5">
                 <div class="text-center text-white">
-                    <h1 class="display-4 fw-bolder">Billing Info</h1>
-                    <p class="lead fw-normal text-white-50 mb-0">Enter Your Payment Info...</p>
+                    <h1 class="display-4 fw-bolder">Processing Order...</h1>
+                    <p class="lead fw-normal text-white-50 mb-0">This is temporary</p>
                 </div>
             </div>
         </header>
         <br/>
         <div class="container">
             <div class="row">
-
+                
                     <div class="col-md-6 offset-md-3">
           <div class="card">
           <div class="card-header">
@@ -23,7 +24,7 @@
           </div>
           <div class="card-body">
             {% for product in cart_products %}
-                {{ product.name }}:
+                {{ product.name }}: 
                     {% if product.is_sale %}
                         ${{ product.sale_price }}
                     {% else %}
@@ -31,7 +32,7 @@
                 {% endif %}
 
                 <br/>
-                <small>Quantity:
+                <small>Quantity: 
                 {% for key, value in quantities.items %}
                     {% if key == product.id|slugify %}
                         {{ value }}
@@ -51,7 +52,7 @@
     Shipping Info
   </div>
   <div class="card-body">
-
+    
     Name: {{ shipping_info.shipping_full_name }}<br/>
     Email: {{ shipping_info.shipping_email }}<br/>
     Address 1: {{ shipping_info.shipping_address1 }}<br/>
@@ -75,7 +76,7 @@
     <form method="POST" action="{% url 'process_order' %}">
       {% csrf_token %}
     {{ billing_form.as_p }}
-
+    
   </div>
 </div>
 <br/>
